@@ -27,8 +27,8 @@ def predict():
     try:
         # Preprocesar la imagen
         img = Image.open(file).convert('RGB')
-        img = img.resize((224, 224))
-        img_array = np.array(img) / 255.0   # normalize ONLY ONCE
+        img = img.resize((200, 200))
+        img_array = np.array(img)
         img_array = np.expand_dims(img_array, axis=0)
 
         # Hacer la predicción
@@ -46,16 +46,10 @@ def predict():
             "category": predicted_class_name,
             "confidence": confidence
         })
-<<<<<<< HEAD
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True) #¡¡¡¡CAMBIAR DEBUG A FALSE EN PRODUCCION!!!!
 
-# ESTO DEBE IR FUERA DE LA FUNCIÓN
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
-=======
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
->>>>>>> e0a064c4c921775a87166c195ea1d097441b7809
