@@ -1,0 +1,4 @@
+.venv
+dataset/realwaste-main
+dataset
+__pycache__/
