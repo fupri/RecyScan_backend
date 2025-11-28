@@ -1,4 +1,4 @@
-#API con Flask para proyecto de residuos
+# API con Flask para proyecto de residuos
 import os
 from flask import Flask, request, jsonify
 import tensorflow as tf
@@ -28,18 +28,17 @@ def predict():
         # Preprocesar la imagen
         img = Image.open(file).convert('RGB')
         img = img.resize((224, 224))
-        img_array = np.array(img) / 255.0
+        img_array = np.array(img) / 255.0   # normalize ONLY ONCE
         img_array = np.expand_dims(img_array, axis=0)
-        img_array = img_array / 255.0
 
         # Hacer la predicción
         predictions = model.predict(img_array)
-        score = tf.nn.softmax(predictions[0])
+        
+        predicted_index = np.argmax(predictions[0])
+        predicted_class_name = class_names[predicted_index]
 
-        # Obtener la clase con mayor probabilidad
-        predicted_class_index = class_names[np.argmax(predictions[0])]
-        predicted_class_name = class_names[predicted_class_index]
         confidence = float(np.max(predictions[0]))
+
         print(f"Predicción: {predicted_class_name} con confianza {confidence:.4f}")
 
         return jsonify({
@@ -47,5 +46,11 @@ def predict():
             "category": predicted_class_name,
             "confidence": confidence
         })
-    if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=5000, debug=True)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ESTO DEBE IR FUERA DE LA FUNCIÓN
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
