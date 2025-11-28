@@ -46,6 +46,7 @@ def predict():
             "category": predicted_class_name,
             "confidence": confidence
         })
+<<<<<<< HEAD
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -54,3 +55,7 @@ def predict():
 # ESTO DEBE IR FUERA DE LA FUNCIÓN
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+=======
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
+>>>>>>> e0a064c4c921775a87166c195ea1d097441b7809
