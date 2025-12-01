@@ -8,11 +8,11 @@ from Categoria import Categoria
 
 class ClasificadorResiduosDAO:
     def __init__(self, model_path, labels_path=None):
-        self.model_path = model_path
+        self.__model_path = model_path
         
         # Cargar TFLite
         try:
-            self.interpreter = tf.lite.Interpreter(model_path=model_path)
+            self.interpreter = tf.lite.Interpreter(model_path=self.__model_path)
             self.interpreter.allocate_tensors()
             self.input_details = self.interpreter.get_input_details()
             self.output_details = self.interpreter.get_output_details()
@@ -29,6 +29,29 @@ class ClasificadorResiduosDAO:
                 self.class_names = [line.strip() for line in f.readlines()]
         else:
             self.class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
+    
+    def health_check_model(self) -> bool:
+        """
+        Envía una entrada vacía al modelo para confirmar que el intérprete
+        de TFLite está vivo y respondiendo.
+        """
+        try:
+            # 1. Crear una imagen falsa (matriz de ceros) con las dimensiones correctas
+            # dtype=np.float32 es crítico porque es lo que espera TFLite
+            dummy_input = np.zeros(self.input_shape, dtype=np.float32)
+            
+            # 2. Configurar el tensor
+            self.interpreter.set_tensor(self.input_details[0]['index'], dummy_input)
+            
+            # 3. Intentar ejecutar (si esto falla, el modelo está roto)
+            self.interpreter.invoke()
+            
+            # Si llegamos aquí sin error, todo está bien
+            return True
+            
+        except Exception as e:
+            print(f"Health Check Fallido: {e}")
+            return False
 
     def _generar_matriz_input(self, foto: Foto):
         """

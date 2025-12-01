@@ -1,6 +1,6 @@
 # API con Flask para proyecto de residuos
 import os
-from Proyecto.backend.Foto import Foto
+from Foto import Foto
 from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
@@ -12,12 +12,7 @@ app = Flask(__name__)
 dao = ClasificadorResiduosDAO(model_path = '.\Proyecto\model\modelo_reciclaje.tflite'#, labels_path =
 )
 
-# Cargar el modelo preentrenado
-print("Cargando modelo...")
-model = tf.keras.models.load_model('modelo_residuos.h5')
-print("Modelo cargado.")
-
-class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Otro']
+class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
 print(f"Clases definidas: {class_names}")
 
 @app.route('/predict', methods=['POST'])
@@ -25,11 +20,12 @@ def predict():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
 
+    file = request.files['file']
+
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        file = request.files['file']
         mi_foto = Foto(file_source = file, filename = file.filename)
         categoria_resultado = dao.predecir_imagen(mi_foto)
         return jsonify(categoria_resultado.to_dict())
@@ -43,14 +39,33 @@ def get_categories():
 
 @app.route('/health', methods=['GET'])
 def health_check():
-    """Comprueba que el servicio está funcionando correctamente."""
+    """
+    Comprueba que el servicio web responde Y que el modelo de IA funciona.
+    """
     try:
-        model_loaded = model is not None
-        return jsonify({
-        'status': 'ok',
-        'model_loaded': model}), 200
+        # Le preguntamos al DAO si el cerebro (TFLite) funciona
+        ai_is_ready = dao.health_check_model()
+
+        if ai_is_ready:
+            return jsonify({
+                'status': 'online',
+                'service': 'GarbageClassifier API',
+                'model_status': 'ready',
+                'timestamp': datetime.now().isoformat()
+            }), 200
+        else:
+            # El servidor web va, pero la IA falló
+            return jsonify({
+                'status': 'degraded',
+                'model_status': 'failed',
+                'message': 'El modelo no responde a la prueba de inferencia.'
+            }), 503
+
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        return jsonify({
+            'status': 'error', 
+            'message': f"Error interno: {str(e)}"
+        }), 500
 
 @app.route('/info/<string:category_name>', methods=['GET'])
 def get_category_info(category_name):
