@@ -4,8 +4,12 @@ from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+from ClasificadorDAO import ClasificadorResiduosDAO
 
 app = Flask(__name__)
+
+dao = ClasificadorResiduosDAO(model_path = '.\Proyecto\model\modelo_reciclaje.tflite'#, labels_path =
+)
 
 # Cargar el modelo preentrenado
 print("Cargando modelo...")
@@ -25,27 +29,10 @@ def predict():
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        # Preprocesar la imagen
-        img = Image.open(file).convert('RGB')
-        img = img.resize((200, 200))
-        img_array = np.array(img)
-        img_array = np.expand_dims(img_array, axis=0)
+        result = dao.predecir_imagen(file)
 
-        # Hacer la predicción
-        predictions = model.predict(img_array)
-        
-        predicted_index = np.argmax(predictions[0])
-        predicted_class_name = class_names[predicted_index]
-
-        confidence = float(np.max(predictions[0]))
-
-        print(f"Predicción: {predicted_class_name} con confianza {confidence:.4f}")
-
-        return jsonify({
-            "object": predicted_class_name,
-            "category": predicted_class_name,
-            "confidence": confidence
-        })
+        print(f"Predicción: {result['category']} con confianza {result['confidence']:.2f}")
+        return jsonify(result)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
