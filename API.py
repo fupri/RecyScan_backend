@@ -9,7 +9,7 @@ from ClasificadorDAO import ClasificadorResiduosDAO
 
 app = Flask(__name__)
 
-dao = ClasificadorResiduosDAO(model_path = '.\Proyecto\model\modelo_reciclaje.tflite'#, labels_path =
+dao = ClasificadorResiduosDAO(model_path = '..\model\modelo_reciclaje.tflite'#, labels_path =
 )
 
 class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
