@@ -1,5 +1,6 @@
 # API con Flask para proyecto de residuos
 import os
+from Proyecto.backend.Foto import Foto
 from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
@@ -24,15 +25,14 @@ def predict():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
 
-    file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        result = dao.predecir_imagen(file)
-
-        print(f"Predicción: {result['category']} con confianza {result['confidence']:.2f}")
-        return jsonify(result)
+        file = request.files['file']
+        mi_foto = Foto(file_source = file, filename = file.filename)
+        categoria_resultado = dao.predecir_imagen(mi_foto)
+        return jsonify(categoria_resultado.to_dict())
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
