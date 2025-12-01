@@ -1,6 +1,6 @@
 # API con Flask para proyecto de residuos
 import os
-from Proyecto.backend.Foto import Foto
+from Foto import Foto
 from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
@@ -9,13 +9,8 @@ from ClasificadorDAO import ClasificadorResiduosDAO
 
 app = Flask(__name__)
 
-dao = ClasificadorResiduosDAO(model_path = '.\Proyecto\model\modelo_reciclaje.tflite'#, labels_path =
+dao = ClasificadorResiduosDAO(model_path = '..\model\modelo_reciclaje.tflite'#, labels_path =
 )
-
-# Cargar el modelo preentrenado
-print("Cargando modelo...")
-model = tf.keras.models.load_model('modelo_residuos.h5')
-print("Modelo cargado.")
 
 class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Otro']
 print(f"Clases definidas: {class_names}")
@@ -24,12 +19,13 @@ print(f"Clases definidas: {class_names}")
 def predict():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
+    
+    file = request.files['file']
 
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        file = request.files['file']
         mi_foto = Foto(file_source = file, filename = file.filename)
         categoria_resultado = dao.predecir_imagen(mi_foto)
         return jsonify(categoria_resultado.to_dict())
