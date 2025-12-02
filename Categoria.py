@@ -3,10 +3,10 @@ class Categoria:
     Ya no es un diccionario simple, es un objeto con propiedades y lógica.
     """
     def __init__(self, nombre, confianza, indice):
-        self.__nombre = nombre
-        self.__confianza = confianza
-        self.__indice = indice
-        self.__metadata = self._cargar_metadata() # Auto-enriquecimiento
+        self.nombre = nombre
+        self.confianza = confianza
+        self.indice = indice
+        self.metadata = self._cargar_metadata() # Auto-enriquecimiento
 
     def _cargar_metadata(self):
         """
@@ -23,13 +23,13 @@ class Categoria:
             'Vegetación': {'contenedor': 'Marrón', 'instruccion': 'Residuos de jardín'},
             'Otro': {'contenedor': 'Gris/Punto Limpio', 'instruccion': 'Consultar normativa'}
         }
-        return info_db.get(self.__nombre, {'contenedor': 'Desconocido', 'instruccion': 'N/A'})
+        return info_db.get(self.nombre, {'contenedor': 'Desconocido', 'instruccion': 'N/A'})
 
     def to_dict(self):
         """Helper para convertir el objeto a JSON para la API"""
         return {
-            "categoria": self.__nombre,
-            "confianza": self.__confianza,
-            "contenedor": self.__metadata['contenedor'],
-            "instruccion": self.__metadata['instruccion']
+            "categoria": self.nombre,
+            "confianza": self.confianza,
+            "contenedor": self.metadata['contenedor'],
+            "instruccion": self.metadata['instruccion']
         }

@@ -6,10 +6,11 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 from ClasificadorDAO import ClasificadorResiduosDAO
+from datetime import datetime
 
 app = Flask(__name__)
 
-dao = ClasificadorResiduosDAO(model_path = '..\model\modelo_reciclaje.tflite'#, labels_path =
+dao = ClasificadorResiduosDAO(model_path = os.path.join('..', 'model', 'modelo_reciclaje.tflite')#, labels_path =
 )
 
 class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
