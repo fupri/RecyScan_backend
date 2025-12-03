@@ -24,7 +24,7 @@ with zipfile.ZipFile(INPUT_ZIP, 'r') as zin, \
         if is_image(item.filename):
             try:
                 img = Image.open(io.BytesIO(data))
-                img.thumbnail(TARGET_SIZE, Image.LANCZOS)
+                img.thumbnail(TARGET_SIZE, Image.Resampling.LANCZOS)
 
                 buf = io.BytesIO()
                 img.save(buf, format=img.format if img.format else "PNG")
