@@ -10,10 +10,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-dao = ClasificadorResiduosDAO(model_path = os.path.join('..', 'model', 'modelo_reciclaje.tflite')#, labels_path =
+class_names = ['battery', 'cardboard', 'clothes', 'glass', 'metal', 'miscellaneous', 'organic', 'paper', 'plastic', 'shoes', 'vegetation']
+dao = ClasificadorResiduosDAO(model_path = os.path.join('..', 'model', 'modelo_reciclaje_0.92accurate.tflite')#, labels_path =
 )
 
-class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
+#class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
+
 print(f"Clases definidas: {class_names}")
 
 @app.route('/predict', methods=['POST'])

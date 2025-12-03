@@ -28,7 +28,7 @@ class ClasificadorResiduosDAO:
             with open(labels_path, 'r') as f:
                 self.class_names = [line.strip() for line in f.readlines()]
         else:
-            self.class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
+            self.class_names = ['battery', 'cardboard', 'clothes', 'glass', 'metal', 'miscellaneous', 'organic', 'paper', 'plastic', 'shoes', 'vegetation']
     
     def health_check_model(self) -> bool:
         """
