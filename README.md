@@ -1,4 +1,7 @@
 # RecyScan_backEnd
+
+RecyScan es una app móbil que pide una foto de un residuo al usuario y ésta le indica al usuario qué tipo de residuo es, la probabilidad de que lo sea, el contenedor al que debe tirarlo para su debido reciclaje y una breve instrucción para facilitar el reciclaje.
+
 Instrucciones de uso:
 
 1. Abrir un terminal en la raíz del repositorio
