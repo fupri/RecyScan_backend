@@ -2,9 +2,6 @@
 import os
 from Foto import Foto
 from flask import Flask, request, jsonify
-import tensorflow as tf
-import numpy as np
-from PIL import Image
 from ClasificadorDAO import ClasificadorResiduosDAO
 from datetime import datetime
 
