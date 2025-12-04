@@ -2,13 +2,13 @@
 import os
 from Foto import Foto
 from flask import Flask, request, jsonify
-from ClasificadorDAO import ClasificadorResiduosDAO
+from Clasificador_main import ClasificadorResiduos
 from datetime import datetime
 
 app = Flask(__name__)
 
 class_names = ['battery', 'cardboard', 'clothes', 'glass', 'metal', 'miscellaneous', 'organic', 'paper', 'plastic', 'shoes', 'vegetation']
-dao = ClasificadorResiduosDAO(model_path = os.path.join('..', 'model', 'modelo_reciclaje_0.92accurate.tflite')#, labels_path =
+dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite')#, labels_path =
 )
 
 #class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
