@@ -13,16 +13,44 @@ class Categoria:
         Cada categoría sabe su propia información de reciclaje.
         """
         info_db = {
-            'Cartón': {'contenedor': 'Azul', 'instruccion': 'Plegar cajas'},
-            'Plástico': {'contenedor': 'Amarillo', 'instruccion': 'Aplastar botellas'},
-            'Vidrio': {'contenedor': 'Verde', 'instruccion': 'Sin tapones ni tapas'},
-            'Papel': {'contenedor': 'Azul', 'instruccion': 'Sin grapas'},
-            'Metal': {'contenedor': 'Amarillo', 'instruccion': 'Latas limpias'},
-            'Orgánico': {'contenedor': 'Marrón', 'instruccion': 'Restos de comida'},
-            'Textil': {'contenedor': 'Naranja', 'instruccion': 'Ropa usada'},
-            'Vegetación': {'contenedor': 'Marrón', 'instruccion': 'Residuos de jardín'},
-            'Otro': {'contenedor': 'Gris/Punto Limpio', 'instruccion': 'Consultar normativa'}
+    'cardboard': {  # Cartón
+        'contenedor': 'Azul',
+        'instruccion': 'Plegar cajas'
+    },
+    'plastic': {  # Plástico
+        'contenedor': 'Amarillo',
+        'instruccion': 'Aplastar botellas'
+    },
+    'glass': {  # Vidrio
+        'contenedor': 'Verde',
+        'instruccion': 'Sin tapones ni tapas'
+    },
+    'paper': {  # Papel
+        'contenedor': 'Azul',
+        'instruccion': 'Sin grapas'
+    },
+    'metal': {  # Metal
+        'contenedor': 'Amarillo',
+        'instruccion': 'Latas limpias'
+    },
+    'organic': {  # Orgánico
+        'contenedor': 'Marrón',
+        'instruccion': 'Restos de comida'
+    },
+    'clothes': {  # Textil
+        'contenedor': 'Naranja',
+        'instruccion': 'Ropa usada'
+    },
+    'vegetation': {  # Vegetación
+        'contenedor': 'Marrón',
+        'instruccion': 'Residuos de jardín'
+    },
+    'miscellaneous': {  # Otro
+        'contenedor': 'Gris/Punto Limpio',
+        'instruccion': 'Consultar normativa'
+    }
         }
+        print(f"Cargando metadata para categoría: {self.nombre}")
         return info_db.get(self.nombre, {'contenedor': 'Desconocido', 'instruccion': 'N/A'})
 
     def to_dict(self):
