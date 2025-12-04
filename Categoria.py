@@ -15,43 +15,53 @@ class Categoria:
         info_db = {
     'cardboard': {  # Cartón
         'contenedor': 'Azul',
-        'instruccion': 'Plegar cajas'
+        'instruccion': 'Plegar cajas',
+        'nombre': 'Cartón'
     },
     'plastic': {  # Plástico
         'contenedor': 'Amarillo',
-        'instruccion': 'Aplastar botellas'
+        'instruccion': 'Aplastar botellas',
+        'nombre': 'Plásticos y envases'
     },
     'glass': {  # Vidrio
         'contenedor': 'Verde',
-        'instruccion': 'Sin tapones ni tapas'
+        'instruccion': 'Sin tapones ni tapas',
+        'nombre': 'Vidrio'
     },
     'paper': {  # Papel
         'contenedor': 'Azul',
-        'instruccion': 'Sin grapas'
+        'instruccion': 'Sin grapas',
+        'nombre': 'Papel'
     },
     'metal': {  # Metal
         'contenedor': 'Amarillo',
-        'instruccion': 'Latas limpias'
+        'instruccion': 'Latas limpias',
+        'nombre': 'Metales y latas'
     },
     'organic': {  # Orgánico
         'contenedor': 'Marrón',
-        'instruccion': 'Restos de comida'
+        'instruccion': 'Restos de comida',
+        'nombre': 'Residuos orgánicos'
     },
     'clothes': {  # Textil
         'contenedor': 'Naranja',
-        'instruccion': 'Ropa usada'
+        'instruccion': 'Ropa usada',
+        'nombre': 'Ropa y textiles'
     },
     'shoes': {  # Calzado
         'contenedor': 'Naranja',
-        'instruccion': 'Calzado usado'
+        'instruccion': 'Calzado usado',
+        'nombre': 'Calzado'
     },
     'vegetation': {  # Vegetación
         'contenedor': 'Marrón',
-        'instruccion': 'Residuos de jardín'
+        'instruccion': 'Residuos de jardín',
+        'nombre': 'Residuos de jardinería'
     },
     'miscellaneous': {  # Otro
         'contenedor': 'Gris/Punto Limpio',
-        'instruccion': 'Consultar normativa'
+        'instruccion': 'Consultar normativa',
+        'nombre': 'Otros residuos'
     }
         }
         print(f"Cargando metadata para categoría: {self.nombre}")
@@ -63,5 +73,6 @@ class Categoria:
             "categoria": self.nombre,
             "confianza": self.confianza,
             "contenedor": self.metadata['contenedor'],
-            "instruccion": self.metadata['instruccion']
+            "instruccion": self.metadata['instruccion'],
+            "nombre": self.metadata['nombre'],
         }
