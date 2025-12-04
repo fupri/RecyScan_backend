@@ -10,6 +10,6 @@ Instrucciones de uso:
 
 Entrenamiento de la IA:
 
-1. Ir al link del dataset y descargarlo, poniendolo en la misma carpeta que el resto de archivos --> [link del drive]
+1. Ir al link del dataset y descargarlo, poniendolo en la misma carpeta que el resto de archivos --> [https://drive.google.com/file/d/1ZhyRWr8eqKWuHSx5rxILLldra6nNg2_C/view?usp=sharing]
 2. Una vez descargado, descomprimir el archivo.
 3. Abrir y ejecutar "training_ia.py" y esperar (puede tardar un tiempo).
