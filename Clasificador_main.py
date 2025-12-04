@@ -6,7 +6,7 @@ from datetime import datetime
 from Foto import Foto
 from Categoria import Categoria
 
-class ClasificadorResiduosDAO:
+class ClasificadorResiduos:
     def __init__(self, model_path, labels_path=None):
         self.__model_path = model_path
         
