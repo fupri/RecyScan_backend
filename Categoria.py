@@ -41,6 +41,10 @@ class Categoria:
         'contenedor': 'Naranja',
         'instruccion': 'Ropa usada'
     },
+    'shoes': {  # Calzado
+        'contenedor': 'Naranja',
+        'instruccion': 'Calzado usado'
+    },
     'vegetation': {  # Vegetación
         'contenedor': 'Marrón',
         'instruccion': 'Residuos de jardín'
