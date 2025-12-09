@@ -8,8 +8,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 class_names = ['battery', 'cardboard', 'clothes', 'glass', 'metal', 'miscellaneous', 'organic', 'paper', 'plastic', 'shoes', 'vegetation']
-dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite')#, labels_path =
-)
+dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'))
 
 #class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
 
