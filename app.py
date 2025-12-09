@@ -11,8 +11,6 @@ class_names = ['battery', 'cardboard', 'clothes', 'glass', 'metal', 'miscellaneo
 dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite')#, labels_path =
 )
 
-#class_names = ['Cartón', 'Plástico', 'Vidrio', 'Papel', 'Metal', 'Orgánico', 'Textil', 'Vegetación', 'Otro']
-
 print(f"Clases definidas: {class_names}")
 
 @app.route('/predict', methods=['POST'])
@@ -109,7 +107,11 @@ def get_category_info(category_name):
 
     info = recycling_info.get(category_name)
     if info:
-        return jsonify(info)
+        return jsonify({
+            'status': 'success',
+            'category': category_name,
+            'data': info
+        }), 200
     else:
         return jsonify({'error': 'Categoría no encontrada'}), 404
 
