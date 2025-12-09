@@ -1,78 +1,82 @@
+recycling_info = {
+    'battery': {
+        'description': 'Dispositivos portátiles que almacenan energía química para su uso en aparatos electrónicos.',
+        'container': 'Lleva las baterías usadas a puntos de recogida específicos o tiendas autorizadas.',
+        'common_items': ['Baterías AA', 'Baterías de teléfonos móviles', 'Baterías de portátiles']
+    },
+    'cardboard': {
+        'description': 'Material hecho de fibras de celulosa, utilizado para embalajes y envases.',
+        'container': 'Plega las cajas limpias y colócalas en el contenedor azul.',
+        'common_items': ['Cajas de embalaje', 'Cajas de cereales', 'Tubos de papel higiénico']
+    },
+    'plastic': {
+        'description': 'Material sintético derivado del petróleo, utilizado en envases y productos desechables.',
+        'container': 'Enjuaga los envases y colócalos en el contenedor amarillo.',
+        'common_items': ['Botellas de agua', 'Envases de yogur', 'Bolsas de plástico']
+    },
+    'glass': {
+        'description': 'Material inorgánico y transparente, utilizado en botellas y frascos.',
+        'container': 'Coloca las botellas y frascos en el contenedor verde, sin tapones.',
+        'common_items': ['Botellas de vidrio', 'Frascos de alimentos', 'Vasos rotos']
+    },
+    'paper': {
+        'description': 'Material hecho de fibras vegetales, utilizado en impresiones y embalajes.',
+        'container': 'Coloca el papel limpio en el contenedor azul, sin grapas ni plásticos.',
+        'common_items': ['Periódicos', 'Revistas', 'Hojas de papel']
+    },
+    'metal': {
+        'description': 'Material sólido y maleable, utilizado en latas y utensilios.',
+        'container': 'Enjuaga las latas y colócalas en el contenedor amarillo.',
+        'common_items': ['Latas de refrescos', 'Utensilios de cocina', 'Aluminio de alimentos']
+    },
+    'clothes': {
+        'description': 'Material hecho de fibras naturales o sintéticas, utilizado en ropa y accesorios.',
+        'container': 'Deposita la ropa usada en contenedores específicos para textiles.',
+        'common_items': ['Ropa vieja', 'Zapatos usados', 'Sábanas y toallas']
+    },
+    'shoes': {
+        'description': 'Material utilizado para fabricar zapatos y botas.',
+        'container': 'Deposita los zapatos usados en contenedores específicos para calzado.',
+        'common_items': ['Zapatos deportivos', 'Botas', 'Sandalias']
+    },
+    'vegetation': {
+        'description': 'Residuos biodegradables provenientes de plantas y jardines.',
+        'container': 'Coloca los residuos vegetales en el contenedor marrón o compostaje.',
+        'common_items': ['Hojas', 'Ramas', 'Restos de jardín']
+    },
+    'organic': {
+        'description': 'Residuos biodegradables provenientes de alimentos y jardinería.',
+        'container': 'Coloca los residuos orgánicos en el contenedor marrón o compostaje.',
+        'common_items': ['Restos de comida', 'Cáscaras de frutas', 'Residuos de jardín']
+    },
+    'miscellaneous': {
+        'description': 'Residuos que no encajan en las otras categorías.',
+        'container': 'Consulta las normativas locales para la disposición adecuada. Generalmente pueden desecharse en el contenedor de resto.',
+        'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
+    }
+}
+
+
 class Categoria:
-    """
-    Ya no es un diccionario simple, es un objeto con propiedades y lógica.
-    """
+
     def __init__(self, nombre, confianza, indice):
         self.nombre = nombre
         self.confianza = confianza
         self.indice = indice
-        self.metadata = self._cargar_metadata() # Auto-enriquecimiento
+        self.metadata = self.cargar_metadata() # Auto-enriquecimiento
 
-    def _cargar_metadata(self):
-        """
-        Cada categoría sabe su propia información de reciclaje.
-        """
-        info_db = {
-    'cardboard': {  # Cartón
-        'contenedor': 'Azul',
-        'instruccion': 'Plegar cajas',
-        'nombre': 'Cartón'
-    },
-    'plastic': {  # Plástico
-        'contenedor': 'Amarillo',
-        'instruccion': 'Aplastar botellas',
-        'nombre': 'Plásticos y envases'
-    },
-    'glass': {  # Vidrio
-        'contenedor': 'Verde',
-        'instruccion': 'Sin tapones ni tapas',
-        'nombre': 'Vidrio'
-    },
-    'paper': {  # Papel
-        'contenedor': 'Azul',
-        'instruccion': 'Sin grapas',
-        'nombre': 'Papel'
-    },
-    'metal': {  # Metal
-        'contenedor': 'Amarillo',
-        'instruccion': 'Latas limpias',
-        'nombre': 'Metales y latas'
-    },
-    'organic': {  # Orgánico
-        'contenedor': 'Marrón',
-        'instruccion': 'Restos de comida',
-        'nombre': 'Residuos orgánicos'
-    },
-    'clothes': {  # Textil
-        'contenedor': 'Naranja',
-        'instruccion': 'Ropa usada',
-        'nombre': 'Ropa y textiles'
-    },
-    'shoes': {  # Calzado
-        'contenedor': 'Naranja',
-        'instruccion': 'Calzado usado',
-        'nombre': 'Calzado'
-    },
-    'vegetation': {  # Vegetación
-        'contenedor': 'Marrón',
-        'instruccion': 'Residuos de jardín',
-        'nombre': 'Residuos de jardinería'
-    },
-    'miscellaneous': {  # Otro
-        'contenedor': 'Gris/Punto Limpio',
-        'instruccion': 'Consultar normativa',
-        'nombre': 'Otros residuos'
-    }
-        }
+    def cargar_metadata(self):
+        # Cada categoría sabe su propia información de reciclaje.
         print(f"Cargando metadata para categoría: {self.nombre}")
-        return info_db.get(self.nombre, {'contenedor': 'Desconocido', 'instruccion': 'N/A'})
+        # Usar el diccionario compartido `recycling_info` definido a nivel de módulo
+        return recycling_info.get(self.nombre, {'container': 'Desconocido', 'description': 'N/A', 'common_items': []})
 
     def to_dict(self):
         """Helper para convertir el objeto a JSON para la API"""
         return {
             "categoria": self.nombre,
             "confianza": self.confianza,
-            "contenedor": self.metadata['contenedor'],
-            "instruccion": self.metadata['instruccion'],
-            "nombre": self.metadata['nombre'],
+            "contenedor": self.metadata['container'],
+            "descripcion": self.metadata['description'],
+            "objetos_comunes": self.metadata['common_items'],
         }

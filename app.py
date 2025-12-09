@@ -4,68 +4,11 @@ from Foto import Foto
 from flask import Flask, request, jsonify
 from Clasificador_main import ClasificadorResiduos
 from datetime import datetime
+from Categoria import Categoria, recycling_info
 
 app = Flask(__name__)
 
-recycling_info = {
-        'Batería': {
-            'description': 'Dispositivos portátiles que almacenan energía química para su uso en aparatos electrónicos.',
-            'recycling_instructions': 'Lleva las baterías usadas a puntos de recogida específicos o tiendas autorizadas.',
-            'common_items': ['Baterías AA', 'Baterías de teléfonos móviles', 'Baterías de portátiles']
-        },
-        'Cartón': {
-            'description': 'Material hecho de fibras de celulosa, utilizado para embalajes y envases.',
-            'recycling_instructions': 'Plega las cajas limpias y colócalas en el contenedor azul.',
-            'common_items': ['Cajas de embalaje', 'Cajas de cereales', 'Tubos de papel higiénico']
-        },
-        'Plástico': {
-            'description': 'Material sintético derivado del petróleo, utilizado en envases y productos desechables.',
-            'recycling_instructions': 'Enjuaga los envases y colócalos en el contenedor amarillo.',
-            'common_items': ['Botellas de agua', 'Envases de yogur', 'Bolsas de plástico']
-        },
-        'Vidrio': {
-            'description': 'Material inorgánico y transparente, utilizado en botellas y frascos.',
-            'recycling_instructions': 'Coloca las botellas y frascos en el contenedor verde, sin tapones.',
-            'common_items': ['Botellas de vidrio', 'Frascos de alimentos', 'Vasos rotos']
-        },
-        'Papel': {
-            'description': 'Material hecho de fibras vegetales, utilizado en impresiones y embalajes.',
-            'recycling_instructions': 'Coloca el papel limpio en el contenedor azul, sin grapas ni plásticos.',
-            'common_items': ['Periódicos', 'Revistas', 'Hojas de papel']
-        },
-        'Metal': {
-            'description': 'Material sólido y maleable, utilizado en latas y utensilios.',
-            'recycling_instructions': 'Enjuaga las latas y colócalas en el contenedor amarillo.',
-            'common_items': ['Latas de refrescos', 'Utensilios de cocina', 'Aluminio de alimentos']
-        },
-        'Textil': {
-            'description': 'Material hecho de fibras naturales o sintéticas, utilizado en ropa y accesorios.',
-            'recycling_instructions': 'Deposita la ropa usada en contenedores específicos para textiles.',
-            'common_items': ['Ropa vieja', 'Zapatos usados', 'Sábanas y toallas']
-        },
-        'Calzado': {
-            'description': 'Material utilizado para fabricar zapatos y botas.',
-            'recycling_instructions': 'Deposita los zapatos usados en contenedores específicos para calzado.',
-            'common_items': ['Zapatos deportivos', 'Botas', 'Sandalias']
-        },
-        'Vegetal': {
-            'description': 'Residuos biodegradables provenientes de plantas y jardines.',
-            'recycling_instructions': 'Coloca los residuos vegetales en el contenedor marrón o compostaje.',
-            'common_items': ['Hojas', 'Ramas', 'Restos de jardín']
-        },
-        'Orgánico': {
-            'description': 'Residuos biodegradables provenientes de alimentos y jardinería.',
-            'recycling_instructions': 'Coloca los residuos orgánicos en el contenedor marrón o compostaje.',
-            'common_items': ['Restos de comida', 'Cáscaras de frutas', 'Residuos de jardín']
-        },
-        'Otro': {
-            'description': 'Residuos que no encajan en las otras categorías.',
-            'recycling_instructions': 'Consulta las normativas locales para la disposición adecuada. Generalmente pueden desecharse en el contenedor de resto.',
-            'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
-        }
-    }
-
-dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'))
+predictor = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'))
 
 print(f"Clases definidas: {list(recycling_info.keys())}")
 
@@ -81,7 +24,20 @@ def predict():
 
     try:
         mi_foto = Foto(file_source = file, filename = file.filename)
-        categoria_resultado = dao.predecir_imagen(mi_foto)
+        categoria_resultado = predictor.predecir_imagen(mi_foto)
+        # Si la confianza es baja (< 0.8), devolvemos las dos mejores predicciones
+        try:
+            confianza = float(categoria_resultado.confianza)
+        except Exception:
+            confianza = None
+
+        if confianza is not None and confianza < 0.8:
+            top2 = predictor.obtener_top_k(mi_foto, k=2)
+            return jsonify({
+                'Predicciones': [c.to_dict() for c in top2],
+                'Nota': 'Confianza baja - devolviendo las 2 mejores predicciones'
+            })
+
         return jsonify(categoria_resultado.to_dict())
 
     except Exception as e:
@@ -93,8 +49,8 @@ def health_check():
     Comprueba que el servicio web responde Y que el modelo de IA funciona.
     """
     try:
-        # Le preguntamos al DAO si el cerebro (TFLite) funciona
-        ai_is_ready = dao.health_check_model()
+        # Le preguntamos al predictor si el cerebro (TFLite) funciona
+        ai_is_ready = predictor.health_check_model()
 
         if ai_is_ready:
             return jsonify({
