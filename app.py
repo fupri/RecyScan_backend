@@ -32,10 +32,6 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/categories', methods=['GET'])
-def get_categories():
-    return jsonify({'categories': class_names})
-
 @app.route('/health', methods=['GET'])
 def health_check():
     """
@@ -66,7 +62,11 @@ def health_check():
             'message': f"Error interno: {str(e)}"
         }), 500
 
-@app.route('/info/<string:category_name>', methods=['GET'])
+@app.route('/categories', methods=['GET'])
+def get_categories():
+    return jsonify({'categories': class_names})
+
+@app.route('/categories/<string:category_name>', methods=['GET'])
 def get_category_info(category_name):
     recycling_info = {
         'Cartón': {
