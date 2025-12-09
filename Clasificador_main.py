@@ -1,4 +1,4 @@
-import tensorflow as tf
+from tensorflow import lite as tflite
 import numpy as np
 from PIL import Image
 import os
@@ -12,7 +12,7 @@ class ClasificadorResiduos:
         
         # Cargar TFLite
         try:
-            self.interpreter = tf.lite.Interpreter(model_path=self.__model_path)
+            self.interpreter = tflite.Interpreter(model_path=self.__model_path)
             self.interpreter.allocate_tensors()
             self.input_details = self.interpreter.get_input_details()
             self.output_details = self.interpreter.get_output_details()

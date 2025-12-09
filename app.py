@@ -7,11 +7,71 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-class_names = ['battery', 'cardboard', 'clothes', 'glass', 'metal', 'miscellaneous', 'organic', 'paper', 'plastic', 'shoes', 'vegetation']
-dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite')#, labels_path =
-)
+recycling_info = {
+        'Batería': {
+            'description': 'Dispositivos portátiles que almacenan energía química para su uso en aparatos electrónicos.',
+            'recycling_instructions': 'Lleva las baterías usadas a puntos de recogida específicos o tiendas autorizadas.',
+            'common_items': ['Baterías AA', 'Baterías de teléfonos móviles', 'Baterías de portátiles']
+        },
+        'Cartón': {
+            'description': 'Material hecho de fibras de celulosa, utilizado para embalajes y envases.',
+            'recycling_instructions': 'Plega las cajas limpias y colócalas en el contenedor azul.',
+            'common_items': ['Cajas de embalaje', 'Cajas de cereales', 'Tubos de papel higiénico']
+        },
+        'Plástico': {
+            'description': 'Material sintético derivado del petróleo, utilizado en envases y productos desechables.',
+            'recycling_instructions': 'Enjuaga los envases y colócalos en el contenedor amarillo.',
+            'common_items': ['Botellas de agua', 'Envases de yogur', 'Bolsas de plástico']
+        },
+        'Vidrio': {
+            'description': 'Material inorgánico y transparente, utilizado en botellas y frascos.',
+            'recycling_instructions': 'Coloca las botellas y frascos en el contenedor verde, sin tapones.',
+            'common_items': ['Botellas de vidrio', 'Frascos de alimentos', 'Vasos rotos']
+        },
+        'Papel': {
+            'description': 'Material hecho de fibras vegetales, utilizado en impresiones y embalajes.',
+            'recycling_instructions': 'Coloca el papel limpio en el contenedor azul, sin grapas ni plásticos.',
+            'common_items': ['Periódicos', 'Revistas', 'Hojas de papel']
+        },
+        'Metal': {
+            'description': 'Material sólido y maleable, utilizado en latas y utensilios.',
+            'recycling_instructions': 'Enjuaga las latas y colócalas en el contenedor amarillo.',
+            'common_items': ['Latas de refrescos', 'Utensilios de cocina', 'Aluminio de alimentos']
+        },
+        'Textil': {
+            'description': 'Material hecho de fibras naturales o sintéticas, utilizado en ropa y accesorios.',
+            'recycling_instructions': 'Deposita la ropa usada en contenedores específicos para textiles.',
+            'common_items': ['Ropa vieja', 'Zapatos usados', 'Sábanas y toallas']
+        },
+        'Calzado': {
+            'description': 'Material utilizado para fabricar zapatos y botas.',
+            'recycling_instructions': 'Deposita los zapatos usados en contenedores específicos para calzado.',
+            'common_items': ['Zapatos deportivos', 'Botas', 'Sandalias']
+        },
+        'Vegetal': {
+            'description': 'Residuos biodegradables provenientes de plantas y jardines.',
+            'recycling_instructions': 'Coloca los residuos vegetales en el contenedor marrón o compostaje.',
+            'common_items': ['Hojas', 'Ramas', 'Restos de jardín']
+        },
+        'Orgánico': {
+            'description': 'Residuos biodegradables provenientes de alimentos y jardinería.',
+            'recycling_instructions': 'Coloca los residuos orgánicos en el contenedor marrón o compostaje.',
+            'common_items': ['Restos de comida', 'Cáscaras de frutas', 'Residuos de jardín']
+        },
+        'Otro': {
+            'description': 'Residuos que no encajan en las otras categorías.',
+            'recycling_instructions': 'Consulta las normativas locales para la disposición adecuada. Generalmente pueden desecharse en el contenedor de resto.',
+            'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
+        }
+    }
 
+<<<<<<< HEAD
 print(f"Clases definidas: {class_names}")
+=======
+dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'))
+
+print(f"Clases definidas: {list(recycling_info.keys())}")
+>>>>>>> b23fbfe46978c20ba7ce3bd8de100955bd70ff09
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -30,10 +90,6 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-@app.route('/categories', methods=['GET'])
-def get_categories():
-    return jsonify({'categories': class_names})
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -65,46 +121,12 @@ def health_check():
             'message': f"Error interno: {str(e)}"
         }), 500
 
-@app.route('/info/<string:category_name>', methods=['GET'])
-def get_category_info(category_name):
-    recycling_info = {
-        'Cartón': {
-            'description': 'Material hecho de fibras de celulosa, utilizado para embalajes y envases.',
-            'recycling_instructions': 'Plega las cajas limpias y colócalas en el contenedor azul.',
-            'common_items': ['Cajas de embalaje', 'Cajas de cereales', 'Tubos de papel higiénico']
-        },
-        'Plástico': {
-            'description': 'Material sintético derivado del petróleo, utilizado en envases y productos desechables.',
-            'recycling_instructions': 'Enjuaga los envases y colócalos en el contenedor amarillo.',
-            'common_items': ['Botellas de agua', 'Envases de yogur', 'Bolsas de plástico']
-        },
-        'Vidrio': {
-            'description': 'Material inorgánico y transparente, utilizado en botellas y frascos.',
-            'recycling_instructions': 'Coloca las botellas y frascos en el contenedor verde, sin tapones.',
-            'common_items': ['Botellas de vidrio', 'Frascos de alimentos', 'Vasos rotos']
-        },
-        'Papel': {
-            'description': 'Material hecho de fibras vegetales, utilizado en impresiones y embalajes.',
-            'recycling_instructions': 'Coloca el papel limpio en el contenedor azul, sin grapas ni plásticos.',
-            'common_items': ['Periódicos', 'Revistas', 'Hojas de papel']
-        },
-        'Metal': {
-            'description': 'Material sólido y maleable, utilizado en latas y utensilios.',
-            'recycling_instructions': 'Enjuaga las latas y colócalas en el contenedor amarillo.',
-            'common_items': ['Latas de refrescos', 'Utensilios de cocina', 'Aluminio de alimentos']
-        },
-        'Orgánico': {
-            'description': 'Residuos biodegradables provenientes de alimentos y jardinería.',
-            'recycling_instructions': 'Coloca los residuos orgánicos en el contenedor marrón o compostaje.',
-            'common_items': ['Restos de comida', 'Cáscaras de frutas', 'Residuos de jardín']
-        },
-        'Otro': {
-            'description': 'Residuos que no encajan en las otras categorías.',
-            'recycling_instructions': 'Consulta las normativas locales para la disposición adecuada. Generalmente pueden desecharse en el contenedor de resto.',
-            'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
-        }
-    }
+@app.route('/categories', methods=['GET'])
+def get_categories():
+    return jsonify({'categories': list(recycling_info.keys())})
 
+@app.route('/categories/<string:category_name>', methods=['GET'])
+def get_category_info(category_name):
     info = recycling_info.get(category_name)
     if info:
         return jsonify({
