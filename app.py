@@ -65,13 +65,9 @@ recycling_info = {
         }
     }
 
-<<<<<<< HEAD
-print(f"Clases definidas: {class_names}")
-=======
 dao = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'))
 
 print(f"Clases definidas: {list(recycling_info.keys())}")
->>>>>>> b23fbfe46978c20ba7ce3bd8de100955bd70ff09
 
 @app.route('/predict', methods=['POST'])
 def predict():
