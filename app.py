@@ -81,7 +81,11 @@ def get_categories():
 def get_category_info(category_name):
     info = recycling_info.get(category_name)
     if info:
-        return jsonify(info)
+        return jsonify({
+            'status': 'success',
+            'category': category_name,
+            'data': info
+        }), 200
     else:
         return jsonify({'error': 'Categoría no encontrada'}), 404
 
