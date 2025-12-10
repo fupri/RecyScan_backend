@@ -7,6 +7,7 @@ from Foto import Foto
 from Categoria import Categoria
 
 class ClasificadorResiduos:
+    
     def __init__(self, model_path, labels_path=None):
         self.__model_path = model_path
         
@@ -28,7 +29,7 @@ class ClasificadorResiduos:
             with open(labels_path, 'r') as f:
                 self.class_names = [line.strip() for line in f.readlines()]
         else:
-            self.class_names = ['battery', 'cardboard', 'clothes', 'glass', 'metal', 'miscellaneous', 'organic', 'paper', 'plastic', 'shoes', 'vegetation']
+            self.class_names = list(Categoria.recycling_info.keys())
     
     def health_check_model(self) -> bool:
         """

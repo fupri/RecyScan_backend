@@ -1,4 +1,6 @@
-recycling_info = {
+class Categoria:
+    
+    recycling_info = {
     'battery': {
         'description': 'Dispositivos portátiles que almacenan energía química para su uso en aparatos electrónicos.',
         'container': 'Lleva las baterías usadas a puntos de recogida específicos o tiendas autorizadas.',
@@ -55,9 +57,6 @@ recycling_info = {
         'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
     }
 }
-
-
-class Categoria:
 
     def __init__(self, nombre, confianza, indice):
         self.nombre = nombre
