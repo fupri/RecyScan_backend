@@ -98,9 +98,7 @@ class ClasificadorResiduos:
         
         return categoria_detectada
 
-    # =========================================================================
     #  MÉTODOS FUTUROS (Aún no conectados a la API)
-    # =========================================================================
 
     def guardar_feedback(self, foto: Foto, categoria_real: Categoria):
         """
