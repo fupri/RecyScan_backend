@@ -4,13 +4,13 @@ from Foto import Foto
 from flask import Flask, request, jsonify
 from Clasificador_main import ClasificadorResiduos
 from datetime import datetime
-from Categoria import Categoria, recycling_info
+from Categoria import Categoria
 
 app = Flask(__name__)
 
 predictor = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'))
 
-print(f"Clases definidas: {list(recycling_info.keys())}")
+print(f"Clases definidas: {list(Categoria.get_recycling_info().keys())}")
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -75,11 +75,11 @@ def health_check():
 
 @app.route('/categories', methods=['GET'])
 def get_categories():
-    return jsonify({'categories': list(recycling_info.keys())})
+    return jsonify({'categories': list(Categoria.get_recycling_info().keys())}), 200
 
 @app.route('/categories/<string:category_name>', methods=['GET'])
 def get_category_info(category_name):
-    info = recycling_info.get(category_name)
+    info = Categoria.get_recycling_info().get(category_name)
     if info:
         return jsonify({
             'status': 'success',

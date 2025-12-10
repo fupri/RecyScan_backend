@@ -29,7 +29,8 @@ class ClasificadorResiduos:
             with open(labels_path, 'r') as f:
                 self.class_names = [line.strip() for line in f.readlines()]
         else:
-            self.class_names = Categoria.class_names()
+            self.class_names = list(Categoria.get_recycling_info().keys())
+            print("Advertencia: No se proporcionó ruta de etiquetas. Usando clases predetermininadas.")
     
     def health_check_model(self) -> bool:
         """
@@ -97,10 +98,6 @@ class ClasificadorResiduos:
         
         return categoria_detectada
 
-    # =========================================================================
-    #  MÉTODOS FUTUROS (Aún no conectados a la API)
-    # =========================================================================
-
     def obtener_top_k(self, foto: Foto, k=3) -> list[Categoria]:
         """
         Útil para cuando la IA duda: 'No sé si es Vidrio o Plástico'.
@@ -123,6 +120,10 @@ class ClasificadorResiduos:
             resultados.append(cat)
             
         return resultados
+
+    # =========================================================================
+    #  MÉTODOS FUTUROS (Aún no conectados a la API)
+    # =========================================================================
 
     def guardar_feedback(self, foto: Foto, categoria_real: Categoria):
         """

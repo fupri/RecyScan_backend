@@ -66,8 +66,8 @@ class Categoria:
 
     
     @classmethod
-    def class_names(cls):
-        return list(cls.__recycling_info.keys())
+    def get_recycling_info(cls):
+        return cls.__recycling_info
 
     def cargar_metadata(self):
         # Cada categoría sabe su propia información de reciclaje.
