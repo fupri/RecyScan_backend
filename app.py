@@ -8,7 +8,8 @@ from Categoria import Categoria
 
 app = Flask(__name__)
 
-predictor = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'))
+predictor = ClasificadorResiduos(model_path = os.path.join('model', 'modelo_reciclaje_0.92accurate.tflite'),
+                                 labels_path = os.path.join('model', 'labels.txt'))
 
 print(f"Clases definidas: {list(Categoria.get_recycling_info().keys())}")
 
