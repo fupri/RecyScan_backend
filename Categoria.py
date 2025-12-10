@@ -1,6 +1,6 @@
 class Categoria:
     
-    recycling_info = {
+    __recycling_info = {
     'battery': {
         'description': 'Dispositivos portátiles que almacenan energía química para su uso en aparatos electrónicos.',
         'container': 'Lleva las baterías usadas a puntos de recogida específicos o tiendas autorizadas.',
@@ -64,11 +64,16 @@ class Categoria:
         self.indice = indice
         self.metadata = self.cargar_metadata() # Auto-enriquecimiento
 
+    
+    @classmethod
+    def class_names(cls):
+        return list(cls.__recycling_info.keys())
+
     def cargar_metadata(self):
         # Cada categoría sabe su propia información de reciclaje.
         print(f"Cargando metadata para categoría: {self.nombre}")
         # Usar el diccionario compartido `recycling_info` definido a nivel de módulo
-        return recycling_info.get(self.nombre, {'container': 'Desconocido', 'description': 'N/A', 'common_items': []})
+        return self.__recycling_info.get(self.nombre, {'container': 'Desconocido', 'description': 'N/A', 'common_items': []})
 
     def to_dict(self):
         """Helper para convertir el objeto a JSON para la API"""

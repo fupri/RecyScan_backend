@@ -29,7 +29,7 @@ class ClasificadorResiduos:
             with open(labels_path, 'r') as f:
                 self.class_names = [line.strip() for line in f.readlines()]
         else:
-            self.class_names = list(Categoria.recycling_info.keys())
+            self.class_names = Categoria.class_names()
     
     def health_check_model(self) -> bool:
         """
