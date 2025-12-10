@@ -2,7 +2,7 @@
 import os
 from Foto import Foto
 from flask import Flask, request, jsonify
-from Clasificador_main import ClasificadorResiduos
+from main import ClasificadorResiduos
 from datetime import datetime
 from Categoria import Categoria
 
