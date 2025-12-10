@@ -25,19 +25,6 @@ def predict():
     try:
         mi_foto = Foto(file_source = file, filename = file.filename)
         categoria_resultado = predictor.predecir_imagen(mi_foto)
-        # Si la confianza es baja (< 0.8), devolvemos las dos mejores predicciones
-        try:
-            confianza = float(categoria_resultado.confianza)
-        except Exception:
-            confianza = None
-
-        if confianza is not None and confianza < 0.8:
-            top2 = predictor.obtener_top_k(mi_foto, k=2)
-            return jsonify({
-                'Predicciones': [c.to_dict() for c in top2],
-                'Nota': 'Confianza baja - devolviendo las 2 mejores predicciones'
-            })
-
         return jsonify(categoria_resultado.to_dict())
 
     except Exception as e:

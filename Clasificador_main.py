@@ -98,29 +98,6 @@ class ClasificadorResiduos:
         
         return categoria_detectada
 
-    def obtener_top_k(self, foto: Foto, k=3) -> list[Categoria]:
-        """
-        Útil para cuando la IA duda: 'No sé si es Vidrio o Plástico'.
-        """
-        input_data = self._generar_matriz_input(foto)
-        self.interpreter.set_tensor(self.input_details[0]['index'], input_data)
-        self.interpreter.invoke()
-        output_data = self.interpreter.get_tensor(self.output_details[0]['index'])[0]
-
-        top_k_indices = output_data.argsort()[-k:][::-1]
-        
-        resultados = []
-        for idx in top_k_indices:
-            # Creamos objetos Categoria para cada posibilidad
-            cat = Categoria(
-                nombre=self.class_names[idx], 
-                confianza=float(output_data[idx]),
-                indice=int(idx)
-            )
-            resultados.append(cat)
-            
-        return resultados
-
     # =========================================================================
     #  MÉTODOS FUTUROS (Aún no conectados a la API)
     # =========================================================================
