@@ -11,30 +11,40 @@ class Categoria:
         'container': 'Plega las cajas limpias y colócalas en el contenedor azul.',
         'common_items': ['Cajas de embalaje', 'Cajas de cereales', 'Tubos de papel higiénico']
     },
-    'plastic': {
-        'description': 'Material sintético derivado del petróleo, utilizado en envases y productos desechables.',
-        'container': 'Enjuaga los envases y colócalos en el contenedor amarillo.',
-        'common_items': ['Botellas de agua', 'Envases de yogur', 'Bolsas de plástico']
+    'clothes': {
+        'description': 'Material hecho de fibras naturales o sintéticas, utilizado en ropa y accesorios.',
+        'container': 'Deposita la ropa usada en contenedores específicos para textiles.',
+        'common_items': ['Ropa vieja', 'Zapatos usados', 'Sábanas y toallas']
     },
     'glass': {
         'description': 'Material inorgánico y transparente, utilizado en botellas y frascos.',
         'container': 'Coloca las botellas y frascos en el contenedor verde, sin tapones.',
         'common_items': ['Botellas de vidrio', 'Frascos de alimentos', 'Vasos rotos']
     },
-    'paper': {
-        'description': 'Material hecho de fibras vegetales, utilizado en impresiones y embalajes.',
-        'container': 'Coloca el papel limpio en el contenedor azul, sin grapas ni plásticos.',
-        'common_items': ['Periódicos', 'Revistas', 'Hojas de papel']
-    },
     'metal': {
         'description': 'Material sólido y maleable, utilizado en latas y utensilios.',
         'container': 'Enjuaga las latas y colócalas en el contenedor amarillo.',
         'common_items': ['Latas de refrescos', 'Utensilios de cocina', 'Aluminio de alimentos']
     },
-    'clothes': {
-        'description': 'Material hecho de fibras naturales o sintéticas, utilizado en ropa y accesorios.',
-        'container': 'Deposita la ropa usada en contenedores específicos para textiles.',
-        'common_items': ['Ropa vieja', 'Zapatos usados', 'Sábanas y toallas']
+    'miscellaneous': {
+        'description': 'Residuos que no encajan en las otras categorías.',
+        'container': 'Consulta las normativas locales para la disposición adecuada. Generalmente pueden desecharse en el contenedor de resto.',
+        'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
+    },
+    'organic': {
+        'description': 'Residuos biodegradables provenientes de alimentos y jardinería.',
+        'container': 'Coloca los residuos orgánicos en el contenedor marrón o compostaje.',
+        'common_items': ['Restos de comida', 'Cáscaras de frutas', 'Residuos de jardín']
+    },
+    'paper': {
+        'description': 'Material hecho de fibras vegetales, utilizado en impresiones y embalajes.',
+        'container': 'Coloca el papel limpio en el contenedor azul, sin grapas ni plásticos.',
+        'common_items': ['Periódicos', 'Revistas', 'Hojas de papel']
+    },
+    'plastic': {
+        'description': 'Material sintético derivado del petróleo, utilizado en envases y productos desechables.',
+        'container': 'Enjuaga los envases y colócalos en el contenedor amarillo.',
+        'common_items': ['Botellas de agua', 'Envases de yogur', 'Bolsas de plástico']
     },
     'shoes': {
         'description': 'Material utilizado para fabricar zapatos y botas.',
@@ -46,16 +56,6 @@ class Categoria:
         'container': 'Coloca los residuos vegetales en el contenedor marrón o compostaje.',
         'common_items': ['Hojas', 'Ramas', 'Restos de jardín']
     },
-    'organic': {
-        'description': 'Residuos biodegradables provenientes de alimentos y jardinería.',
-        'container': 'Coloca los residuos orgánicos en el contenedor marrón o compostaje.',
-        'common_items': ['Restos de comida', 'Cáscaras de frutas', 'Residuos de jardín']
-    },
-    'miscellaneous': {
-        'description': 'Residuos que no encajan en las otras categorías.',
-        'container': 'Consulta las normativas locales para la disposición adecuada. Generalmente pueden desecharse en el contenedor de resto.',
-        'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
-    }
 }
 
     def __init__(self, nombre, confianza, indice):
