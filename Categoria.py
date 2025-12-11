@@ -1,6 +1,6 @@
 class Categoria:
     
-    __recycling_info = {
+    __info_dict = {
     'battery': {
         'description': 'Dispositivos portátiles que almacenan energía química para su uso en aparatos electrónicos.',
         'container': 'Lleva las baterías usadas a puntos de recogida específicos o tiendas autorizadas.',
@@ -57,6 +57,8 @@ class Categoria:
         'common_items': ['Pañales', 'Cerámicas', 'Objetos contaminados']
     }
 }
+    
+    __recycling_info = dict(sorted(__info_dict.items()))
 
     def __init__(self, nombre, confianza, indice):
         self.nombre = nombre
