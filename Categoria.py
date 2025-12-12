@@ -13,7 +13,7 @@ class Categoria:
     },
     'clothes': {
         'description': 'Material hecho de fibras naturales o sintéticas, utilizado en ropa y accesorios.',
-        'container': 'Deposita la ropa usada en contenedores específicos para textiles.',
+        'container': 'Deposita la ropa usada en contenedores naranjas específicos para textiles.',
         'common_items': ['Ropa vieja', 'Zapatos usados', 'Sábanas y toallas']
     },
     'glass': {
@@ -48,7 +48,7 @@ class Categoria:
     },
     'shoes': {
         'description': 'Material utilizado para fabricar zapatos y botas.',
-        'container': 'Deposita los zapatos usados en contenedores específicos para calzado.',
+        'container': 'Deposita los zapatos usados en el contenedor de textil dentro de una bolsa, al punto limpio o al contenedor de resto.',
         'common_items': ['Zapatos deportivos', 'Botas', 'Sandalias']
     },
     'vegetation': {
